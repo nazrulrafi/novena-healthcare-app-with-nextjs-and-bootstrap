@@ -2037,7 +2037,7 @@ declare type KnownErrorParams = {
  *    is advisable to start a new trace with appropriate sampling decision.
  *    However, it is desirable to associate incoming SpanContext to new trace
  *    initiated on service provider side so two traces (from Client and from
- *    Service Provider) can be correlated.
+ *    ServiceItem Provider) can be correlated.
  */
 declare interface Link {
     /** The {@link SpanContext} of a linked span. */

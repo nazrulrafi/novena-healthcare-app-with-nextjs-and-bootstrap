@@ -7,6 +7,9 @@ import '@/assets/css/dashboard.css';
 import '@/assets/css/style.css';
 
 import Script from 'next/script';
+import {ToastContainer} from "react-toastify";
+import React from "react";
+
 
 export const metadata = {
   title: 'Your Website Title',
@@ -18,6 +21,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
 
       <body>{children}
+      <ToastContainer />
       <Script src="/assets/plugins/jquery/jquery.js" strategy="afterInteractive" />
       <Script src="/assets/plugins/bootstrap/bootstrap.min.js" strategy="afterInteractive" />
       <Script src="/assets/plugins/slick-carousel/slick/slick.min.js" strategy="afterInteractive" />

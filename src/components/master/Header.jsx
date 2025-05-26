@@ -59,28 +59,17 @@ export default async function Header() {
                             <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
                             <li className="nav-item"><a className="nav-link" href="/services">Services</a></li>
                             <li className="nav-item"><a className="nav-link" href="/department">Departments</a></li>
-
+                            <li className="nav-item"><a className="nav-link" href="/doctors">Doctors</a></li>
+                            <li className="nav-item"><a className="nav-link" href="/blog">Blog</a></li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">Doctors <i className="icofont-thin-down"></i></a>
+                                   aria-haspopup="true" aria-expanded="false">Contact <i
+                                    className="icofont-thin-down"></i></a>
                                 <ul className="dropdown-menu" aria-labelledby="dropdown03">
-                                    <li><a className="dropdown-item" href="/doctors">Doctors</a></li>
-                                    <li><a className="dropdown-item" href="/doctor-single">Doctor Single</a></li>
+                                    <li><a className="dropdown-item" href="/contact">Query</a></li>
                                     <li><a className="dropdown-item" href="/appointment">Appointment</a></li>
-
-                                    <li className="dropdown dropdown-submenu dropleft">
-                                        <a className="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sub Menu</a>
-                                        <ul className="dropdown-menu" aria-labelledby="dropdown0501">
-                                            <li><a className="dropdown-item" href="/submenu1">Submenu 01</a></li>
-                                            <li><a className="dropdown-item" href="/submenu2">Submenu 02</a></li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </li>
-
-                            <li className="nav-item"><a className="nav-link" href="/blog">Blog</a></li>
-                            <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>

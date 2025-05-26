@@ -2,6 +2,7 @@ import Header from "@/components/master/Header.jsx";
 import Footer from "@/components/master/Footer.jsx";
 import PageTitle from "@/components/master/PageTitle.jsx";
 import DepartmentSingle from "@/components/departmentPage/DepartmentSingle";
+import DepartmentTitle from "@/components/departmentPage/DepartmentTitle.jsx";
 
 async function getSingleDepartment(id) {
     try {
@@ -22,13 +23,13 @@ async function getSingleDepartment(id) {
 }
 
 export default async function Page({ params }) {
-    const { id } = params;
+    const { id } = await params;
     const departmentData = await getSingleDepartment(id);
-        console.log(departmentData);
+
     return (
         <>
             <Header />
-            <PageTitle title={departmentData?.dep_name || "Single Department"} />
+            <DepartmentTitle data={departmentData} />
             <DepartmentSingle data={departmentData} />
             <Footer />
         </>

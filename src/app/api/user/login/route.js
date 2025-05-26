@@ -8,8 +8,8 @@ export async function POST(req, res) {
     try {
         let reqBody = await req.json()
         const result = await prisma.user.findUnique({
-            where:reqBody
-        })
+             where: { email: reqBody.email } // ✅ Correct: only unique field
+        });
         if (!result) {
             return NextResponse.json({status: "error", error: result});
         }else {
@@ -18,6 +18,7 @@ export async function POST(req, res) {
             const cookieSting = `token=${token};expires=${expireDuration.toUTCString()};path=/`;
             return NextResponse.json({ status: "success", data: token,userId:result["id"] }, { status: 200, headers: { 'set-cookie': cookieSting } });
         }
+
     }catch (err){
         return NextResponse.json({ status: "fail", data: err });
     }

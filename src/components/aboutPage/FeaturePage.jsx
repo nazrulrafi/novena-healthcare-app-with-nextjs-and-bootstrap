@@ -1,38 +1,32 @@
 import React from 'react';
 
-function FeaturePage(props) {
+function FeaturePage({ data }) {
+    const serviceItem = data.find(item => item.metaKey === 'all_services');
+    const services = serviceItem ? JSON.parse(serviceItem.value).slice(0, 4) : [];
+
     return (
-        <section className="fetaure-page ">
+        <section className="fetaure-page">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-3 col-md-6">
-                        <div className="about-block-item mb-5 mb-lg-0">
-                            <img src="/assets/images/about/about-1.jpg" alt="" className="img-fluid w-100"/>
-                            <h4 className="mt-3">Healthcare for Kids</h4>
-                            <p>Voluptate aperiam esse possimus maxime repellendus, nihil quod accusantium .</p>
+                    {services.length === 0 ? (
+                        <div className="col-12 text-center">
+                            <p>No features available.</p>
                         </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                        <div className="about-block-item mb-5 mb-lg-0">
-                            <img src="/assets/images/about/about-2.jpg" alt="" className="img-fluid w-100"/>
-                            <h4 className="mt-3">Medical Counseling</h4>
-                            <p>Voluptate aperiam esse possimus maxime repellendus, nihil quod accusantium .</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                        <div className="about-block-item mb-5 mb-lg-0">
-                            <img src="/assets/images/about/about-3.jpg" alt="" className="img-fluid w-100"/>
-                            <h4 className="mt-3">Modern Equipments</h4>
-                            <p>Voluptate aperiam esse possimus maxime repellendus, nihil quod accusantium .</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6">
-                        <div className="about-block-item">
-                            <img src="/assets/images/about/about-4.jpg" alt="" className="img-fluid w-100"/>
-                            <h4 className="mt-3">Qualified Doctors</h4>
-                            <p>Voluptate aperiam esse possimus maxime repellendus, nihil quod accusantium .</p>
-                        </div>
-                    </div>
+                    ) : (
+                        services.map((service, index) => (
+                            <div key={index} className="col-lg-3 col-md-6">
+                                <div className="about-block-item mb-5 mb-lg-0">
+                                    <img
+                                        src={service.avatar}
+                                        alt={service.title}
+                                        className="img-fluid w-100"
+                                    />
+                                    <h4 className="mt-3">{service.title}</h4>
+                                    <p>{service.description}</p>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </section>

@@ -1,9 +1,10 @@
 import React from 'react';
+import MenuForm from "@/components/dashboard/MenuForm.jsx";
 
-function Menu(props) {
+function Page(props) {
     return (
-        <h2>All Menus</h2>
+        <MenuForm/>
     );
 }
 
-export default Menu;
+export default Page;

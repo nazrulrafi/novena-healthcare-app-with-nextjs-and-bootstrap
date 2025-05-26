@@ -1,42 +1,35 @@
 import React from 'react';
 
-function DepartmentSingle(props) {
+function DepartmentSingle({data}) {
+    const features = data.dep_services_features
+        ? JSON.parse(data.dep_services_features)
+        : [];
     return (
         <section className="section department-single">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-12">
-                        <div className="department-img">
-                            <img src="images/service/bg-1.jpg" alt="" className="img-fluid"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row">
                     <div className="col-lg-8">
+                        <div className="department-img">
+                            <img src={data.dep_feature_image} alt="" className="img-fluid"/>
+                        </div>
                         <div className="department-content mt-5">
-                            <h3 className="text-md">Medecine and Health</h3>
+                            <h3 className="text-md">{data.dep_name}</h3>
                             <div className="divider my-4"></div>
                             <p className="lead">Age forming covered you entered the examine. Blessing scarcely confined
                                 her contempt wondered shy. Dashwoods contented sportsmen at up no convinced cordially
                                 affection.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum recusandae dolor autem
-                                laudantium, quaerat vel dignissimos. Magnam sint suscipit omnis eaque unde eos aliquam
-                                distinctio, quisquam iste, itaque possimus . Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Eveniet alias modi eaque, ratione recusandae cupiditate dolorum
-                                repellendus iure eius rerum hic minus ipsa at, corporis nesciunt tempore vero voluptas.
-                                Tempore.</p>
+                            <p dangerouslySetInnerHTML={{__html: data.dep_description}}/>
 
 
                             <h3 className="mt-5 mb-4">Services features</h3>
                             <div className="divider my-4"></div>
                             <ul className="list-unstyled department-service">
-                                <li><i className="icofont-check mr-2"></i>International Drug Database</li>
-                                <li><i className="icofont-check mr-2"></i>Stretchers and Stretcher Accessories</li>
-                                <li><i className="icofont-check mr-2"></i>Cushions and Mattresses</li>
-                                <li><i className="icofont-check mr-2"></i>Cholesterol and lipid tests</li>
-                                <li><i className="icofont-check mr-2"></i>Critical Care Medicine Specialists</li>
-                                <li><i className="icofont-check mr-2"></i>Emergency Assistance</li>
+                                {features.map((item, index) => (
+                                    <li key={index}>
+                                        <i className="icofont-check mr-2"></i>
+                                        {item.content}
+                                    </li>
+                                ))}
                             </ul>
 
                             <a href="appoinment.html" className="btn btn-main-2 btn-round-full">Make an Appoinment<i

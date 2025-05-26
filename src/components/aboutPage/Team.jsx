@@ -1,6 +1,9 @@
 import React from 'react';
 
-function Team(props) {
+function Team({ data }) {
+
+    const doctors = data.slice(0, 4); // Show only the first 4
+
     return (
         <section className="section team">
             <div className="container">
@@ -16,48 +19,29 @@ function Team(props) {
                 </div>
 
                 <div className="row">
-                    <div className="col-lg-3 col-md-6 col-sm-6">
-                        <div className="team-block mb-5 mb-lg-0">
-                            <img src="/assets/images/team/1.jpg" alt="" className="img-fluid w-100"/>
-
-                            <div className="content">
-                                <h4 className="mt-4 mb-0"><a href="doctor-single.html">John Marshal</a></h4>
-                                <p>Internist, Emergency Physician</p>
+                    {doctors.map((item, index) => (
+                        <div key={item.id} className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="team-block mb-5 mb-lg-0">
+                                <div className="position-relative doctor-inner-box">
+                                    <div className="doctor-profile">
+                                        <div className="doctor-img">
+                                            <img
+                                                src={item.doctor_image}
+                                                alt={item.name}
+                                                className="img-fluid w-100"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="content mt-3">
+                                        <h4 className="mb-0">
+                                            <a href={`/doctors/${item.id}`}>{item.name}</a>
+                                        </h4>
+                                        <p>{item.designation}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="col-lg-3 col-md-6 col-sm-6">
-                        <div className="team-block mb-5 mb-lg-0">
-                            <img src="/assets/images/team/2.jpg" alt="" className="img-fluid w-100"/>
-
-                            <div className="content">
-                                <h4 className="mt-4 mb-0"><a href="doctor-single.html">Marshal Root</a></h4>
-                                <p>Surgeon, Сardiologist</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-lg-3 col-md-6 col-sm-6">
-                        <div className="team-block mb-5 mb-lg-0">
-                            <img src="/assets/images/team/3.jpg" alt="" className="img-fluid w-100"/>
-
-                            <div className="content">
-                                <h4 className="mt-4 mb-0"><a href="doctor-single.html">Siamon john</a></h4>
-                                <p>Internist, General Practitioner</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-md-6 col-sm-6">
-                        <div className="team-block">
-                            <img src="/assets/images/team/4.jpg" alt="" className="img-fluid w-100"/>
-
-                            <div className="content">
-                                <h4 className="mt-4 mb-0"><a href="doctor-single.html">Rishat Ahmed</a></h4>
-                                <p>Orthopedic Surgeon</p>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>

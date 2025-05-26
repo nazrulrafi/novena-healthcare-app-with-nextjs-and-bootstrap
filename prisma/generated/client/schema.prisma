@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client" // 👈 add this
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model menuitem {
+  id         Int      @id @default(autoincrement())
+  name       String
+  link       String
+  order      Int
+  siteMetaId Int
+  sitemeta   sitemeta @relation(fields: [siteMetaId], references: [id], map: "MenuItem_siteMetaId_fkey")
+
+  @@index([siteMetaId], map: "MenuItem_siteMetaId_fkey")
+}
+
+model page {
+  id       Int        @id @default(autoincrement())
+  metaKey  String
+  title    String
+  subTitle String?
+  image    String?
+  pagemeta pagemeta[]
+}
+
+model pagemeta {
+  id      Int    @id @default(autoincrement())
+  metaKey String
+  value   String @db.MediumText
+  pageId  Int
+  page    page   @relation(fields: [pageId], references: [id], onDelete: Cascade, map: "PageMeta_pageId_fkey")
+
+  @@unique([metaKey, pageId])
+  @@index([pageId], map: "PageMeta_pageId_fkey")
+}
+
+model sitemeta {
+  id       Int        @id @default(autoincrement())
+  title    String
+  meta_key String     @unique(map: "SiteMeta_meta_key_key")
+  menuitem menuitem[]
+}
+
+model user {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique(map: "User_email_key")
+  fName    String    @db.VarChar(100)
+  lName    String
+  password String
+  otp      String
+  role     user_role @default(ADMIN)
+  created  DateTime  @default(now())
+  update   DateTime
+}
+
+enum user_role {
+  SUBSCRIBER
+  EDITOR
+  ADMIN
+}

@@ -15,11 +15,7 @@ function Appointment({homeAppointmentTitle,homeAppointmentDescription,homeAppoin
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-10 ">
-                        <div className="appoinment-wrap mt-5 mt-lg-0">
-                            <h2 className="mb-2 title-color">{homeAppointmentTitle}</h2>
-                            <p className="mb-4" dangerouslySetInnerHTML={{__html: homeAppointmentDescription}} />
-                            <AppointmentForm/>
-                        </div>
+                        <AppointmentForm/>
                     </div>
                 </div>
             </div>

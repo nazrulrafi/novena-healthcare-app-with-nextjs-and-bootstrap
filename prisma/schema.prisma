@@ -7,19 +7,143 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  fName    String   @db.VarChar(100)
-  lName    String
-  password String
-  otp      String
-  role     Role     @default(ADMIN)
-  created  DateTime @default(now())
-  update   DateTime @updatedAt
+model menuitem {
+  id         Int      @id @default(autoincrement())
+  name       String
+  link       String
+  order      Int
+  siteMetaId Int
+  sitemeta   sitemeta @relation(fields: [siteMetaId], references: [id], map: "MenuItem_siteMetaId_fkey")
+
+  @@index([siteMetaId], map: "MenuItem_siteMetaId_fkey")
 }
 
-enum Role {
+model page {
+  id       Int        @id @default(autoincrement())
+  metaKey  String
+  title    String
+  subTitle String?
+  image    String?
+  pagemeta pagemeta[]
+}
+
+model pagemeta {
+  id      Int    @id @default(autoincrement())
+  metaKey String
+  value   String @db.MediumText
+  pageId  Int
+  page    page   @relation(fields: [pageId], references: [id], onDelete: Cascade, map: "PageMeta_pageId_fkey")
+
+  @@unique([metaKey, pageId])
+  @@index([pageId], map: "PageMeta_pageId_fkey")
+}
+
+model sitemeta {
+  id       Int        @id @default(autoincrement())
+  title    String
+  meta_key String     @unique(map: "SiteMeta_meta_key_key")
+  menuitem menuitem[]
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique(map: "User_email_key")
+  fName     String    @db.VarChar(100)
+  lName     String
+  password  String
+  otp       String
+  role      user_role @default(EDITOR)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model department {
+  id                    Int    @id @default(autoincrement())
+  dep_name              String
+  dep_title             String
+  dep_description_title String
+  dep_excerpt           String
+  dep_description       String
+  dep_thumbnail_image   String
+  dep_feature_image     String
+  dep_services_features String // Consider using Json if it's structured data
+
+  doctors   doctor[] // One-to-many relation
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model doctor {
+  id                      Int        @id @default(autoincrement())
+  departmentId            Int
+  name                    String
+  designation             String?    @db.LongText
+  facebook                String?    @db.LongText
+  twitter                 String?    @db.LongText
+  linkedin                String?    @db.LongText
+  title                   String?    @db.LongText
+  description             String?    @db.LongText
+  education_qualification String?    @db.LongText
+  skill                   String?    @db.LongText
+  expertise_area          String?    @db.LongText
+  doctor_image            String?    @db.LongText
+  department              department @relation(fields: [departmentId], references: [id])
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+}
+
+model appointment {
+  id             Int      @id @default(autoincrement())
+  name           String
+  phone          String
+  date           String
+  time           String
+  message        String?
+  departmentName String
+  doctorName     String
+  confirm        Boolean  @default(false) // ✅ Add this line
+  createdAt      DateTime @default(now())
+}
+
+model post {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String     @db.LongText
+  post_image  String
+  tags        tag[]      @relation("PostTags")
+  categories  category[] @relation("PostCategories")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  posts     post[]   @relation("PostTags")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  posts     post[]   @relation("PostCategories")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String
+  phone     String
+  message   String
+  confirm   Boolean  @default(false) // ✅ Add this line
+  createdAt DateTime @default(now())
+}
+
+enum user_role {
   SUBSCRIBER
   EDITOR
   ADMIN

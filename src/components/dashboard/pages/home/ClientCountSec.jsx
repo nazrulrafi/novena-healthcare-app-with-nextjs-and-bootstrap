@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ClientCount({ data, onChange }) {
+function ClientCountSec({ data, onChange }) {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function ClientCount({ data, onChange }) {
     return (
         <div className="card shadow-sm mb-4">
             <div className="card-header d-flex justify-content-between align-items-center">
-                <h5>Client Count</h5>
+                <h5>Client Count Section</h5>
                 <button className="btn btn-sm btn-primary" onClick={addNewItem}>+ Add</button>
             </div>
             <div className="card-body">
@@ -95,4 +95,4 @@ function ClientCount({ data, onChange }) {
     );
 }
 
-export default ClientCount;
+export default ClientCountSec;

@@ -1,6 +1,8 @@
 import Script from "next/script";
 import TopBar from "@/components/dashboard/TopBar";
 import LeftSideNavBar from "@/components/dashboard/LeftSideNavBar";
+// Corrected import
+
 
 export default function DashboardLayout({ children }) {
     return (

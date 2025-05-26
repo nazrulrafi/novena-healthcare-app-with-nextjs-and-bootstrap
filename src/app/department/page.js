@@ -1,18 +1,33 @@
-import React from 'react';
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PageTitle from "@/components/PageTitle";
+import Header from "@/components/master/Header.jsx";
+import Footer from "@/components/master/Footer.jsx";
+import PageTitle from "@/components/master/PageTitle.jsx";
 import Service from "@/components/departmentPage/Services";
 
-function DepartmentPage(props) {
+async function getDepartmentData() {
+    try {
+        const res = await fetch(`${process.env.NEXT_APP_BACKEND_URL}/api/dashboard/department`, {
+            cache: 'no-store',
+        });
+
+        const homePageMeta = await res.json();
+        if (!homePageMeta || homePageMeta.message === "fail") {
+            return null;
+        }
+        return homePageMeta.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export default async function DepartmentPage() {
+    const data = await getDepartmentData();
+
     return (
         <>
             <Header />
-            <PageTitle title="Care Department"/>
-            <Service/>
-            <Footer/>
+            <PageTitle title="Care Department" />
+            <Service departmentData={data || []} />
+            <Footer />
         </>
     );
 }
-
-export default DepartmentPage;

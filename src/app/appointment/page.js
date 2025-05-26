@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PageTitle from "@/components/PageTitle";
+import Header from "@/components/master/Header.jsx";
+import Footer from "@/components/master/Footer.jsx";
+import PageTitle from "@/components/master/PageTitle.jsx";
 import Appointment from "@/components/appointmentPage/appointment";
 
 function Page(props) {

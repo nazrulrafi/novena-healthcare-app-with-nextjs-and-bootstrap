@@ -1,17 +1,16 @@
 import React from 'react';
 
-function AboutPage(props) {
+function AboutPage({data}) {
+
     return (
         <section className="section about-page">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-4">
-                        <h2 className="title-color">Personal care for your healthy living</h2>
+                        <h2 className="title-color">{data.aboutPersonalCareTitle}</h2>
                     </div>
                     <div className="col-lg-8">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, quod laborum alias. Vitae
-                            dolorum, officia sit! Saepe ullam facere at, consequatur incidunt, quae esse, quis ut
-                            reprehenderit dignissimos, libero delectus.</p>
+                        <p>{data.aboutPersonalCareDescription}</p>
                         <img src="/assets/images/about/sign.png" alt="" className="img-fluid"/>
                     </div>
                 </div>

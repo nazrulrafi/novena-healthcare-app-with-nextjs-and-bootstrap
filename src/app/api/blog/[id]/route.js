@@ -1,24 +1,26 @@
-import { PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export async function GET(request, { params }) {
+    const { id } =await params;
 
-export async function GET() {
     try {
-        const posts = await prisma.post.findMany({
+        const blog = await prisma.post.findUnique({
+            where: { id: parseInt(id) },
             include: {
                 tags: true,
                 categories: true,
             },
-            orderBy: {
-                createdAt: "desc",
-            },
         });
 
-        return Response.json({ success: true, data: posts });
-    } catch (err) {
-        console.error(err);
-        return Response.json({ success: false, message: "Failed to fetch posts." }, { status: 500 });
+        if (!blog) {
+            return NextResponse.json({ message: 'fail', data: null }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: 'success', data: blog }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: 'fail', error: error.message }, { status: 500 });
     }
 }
