@@ -18,7 +18,7 @@ export async function POST(req) {
             data: reqBody,
         });
 
-        return NextResponse.json({ status: "success", data: result });
+        return NextResponse.json({ status: "success", data: hashedPassword });
     } catch (err) {
         return NextResponse.json({ status: "Fail", data: err.message });
     }

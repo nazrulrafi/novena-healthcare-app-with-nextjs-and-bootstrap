@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs'; // ✅ Import bcrypt
 
 const prisma = new PrismaClient();
 
@@ -19,32 +20,39 @@ export async function POST(req) {
         if (!['SUBSCRIBER', 'EDITOR', 'ADMIN'].includes(role)) {
             return NextResponse.json({ success: false, message: 'Invalid role' }, { status: 400 });
         }
+
+        // ✅ Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
         const otp = "0";
+
         const user = await prisma.user.create({
-            data: { fName, lName, email, password, role, otp },
+            data: { fName, lName, email, password: hashedPassword, role, otp },
         });
 
         return NextResponse.json({ success: true, data: user }, { status: 201 });
     } catch (error) {
-        console.error('POST error:', error); // 👈 add this line
+        console.error('POST error:', error);
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 }
-
 
 export async function PUT(req) {
     try {
         const { id, fName, lName, email, password, role } = await req.json();
 
-        // Validate 'id' existence & type
         if (!id || typeof id !== 'number') {
             return NextResponse.json({ success: false, message: 'Invalid or missing user ID' }, { status: 400 });
         }
 
-        // Update user in DB
+        // ✅ Hash the password (if provided)
+        let updatedData = { fName, lName, email, role };
+        if (password) {
+            updatedData.password = await bcrypt.hash(password, 10);
+        }
+
         const updatedUser = await prisma.user.update({
             where: { id },
-            data: { fName, lName, email, password, role },
+            data: updatedData,
         });
 
         return NextResponse.json({ success: true, data: updatedUser });
@@ -53,7 +61,6 @@ export async function PUT(req) {
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 }
-
 
 export async function DELETE(req) {
     try {
